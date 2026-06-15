@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Успешный вход</title>
+</head>
+<body">
+    <div">
+        <h2>Авторизация прошла успешно!</h2>
+        <p>Добро пожаловать в систему, <b>{{ session['username'] }}</b>!</p>
+        <p>Ваш статус: <u>Обычный пользователь</u> (Доступ к админ-панели ограничен).</p>
+        <br>
+        <a href="{{ url_for('admin_page.logout') }}" >Выйти из аккаунта</a>
+    </div>
+</body>
+</html>

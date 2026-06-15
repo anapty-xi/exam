@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+</head>
+<body>
+    <h2>Панель управления пользователями</h2>
+    <p>Вы вошли как: <b>{{ session['username'] }}</b> (Роль: {{ session['role'] }}) | 
+       <a href="{{ url_for('admin_page.logout') }}">Выйти из системы</a>
+    </p>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <hr>
+
+    <h3>Добавить нового пользователя</h3>
+    <form action="{{ url_for('admin_page.add_user') }}" method="POST">
+        <input type="text" name="username" placeholder="Логин" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Добавить в БД</button>
+    </form>
+
+    <hr>
+
+    <h3>Список пользователей в базе данных</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Логин</th>
+                <th>Пароль</th>
+                <th>Роль</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                    {% if user.username != 'admin' %}
+                        <a href="{{ url_for('admin_page.delete_user', user_id=user.id) }}" onclick="return confirm('Удалить?')">Удалить</a>
+                    {% else %}
+                        <span>Нельзя удалить</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

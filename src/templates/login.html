@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в систему</title>
+</head>
+<body>
+    <h2>Авторизация</h2>
+    
+    <!-- Блок вывода Flash-сообщений об ошибках -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <p style="color: red; font-weight: bold;">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Форма отправляет POST-запрос на роут login -->
+    <form method="POST" action="{{ url_for('admin_page.login') }}">
+        <p>
+            <label>Логин:</label><br>
+            <input type="text" name="username" required placeholder="Введите логин">
+        </p>
+        <p>
+            <label>Пароль:</label><br>
+            <input type="password" name="password" required placeholder="Введите пароль">
+        </p>
+        <button type="submit" style="padding: 5px 15px; cursor: pointer;">Войти</button>
+    </form>
+</body>
+</html>
